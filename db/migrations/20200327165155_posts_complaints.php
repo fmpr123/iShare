@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class Users extends AbstractMigration
+class PostsComplaints extends AbstractMigration
 {
     /**
      * Change Method.
@@ -32,11 +32,11 @@ class Users extends AbstractMigration
     public function change()
     {
         // create the table
-        $table = $this->table('users');
-        $table->addColumn('name', 'string', ['limit' => 100], ['null' => false])
-            ->addColumn('email', 'string', ['limit' => 100], ['null' => false])
-            ->addColumn('password', 'string', ['limit' => 50], ['null' => false])
-            ->addColumn('photo', 'string', ['limit' => 100], ['null' => true])
+        $table = $this->table('posts_complaints');
+        $table->addColumn('post_id', 'integer', ['null' => false])
+            ->addForeignKey('post_id', 'posts', 'id')
+            ->addColumn('user_id', 'integer', ['null' => false])
+            ->addForeignKey('user_id', 'users', 'id')
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'], ['null' => false])
             ->addColumn('updated_at', 'datetime', ['null' => true])
             ->addColumn('deleted_at', 'datetime', ['null' => true])

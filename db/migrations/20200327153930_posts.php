@@ -48,23 +48,3 @@ class Posts extends AbstractMigration
             ->create();
     }
 }
-// CREATE TABLE IF NOT EXISTS `ishare`.`Posts` (
-//     `title` VARCHAR(50) NOT NULL,
-//     `content` VARCHAR(255) NOT NULL,
-//     `url` VARCHAR(100) NULL,
-//     `rating` INT NOT NULL,
-//     `complaints` INT NOT NULL,
-//     `private` TINYINT NOT NULL,
-//     `bloqued` TINYINT NOT NULL,
-//     `user_id` INT NOT NULL,
-//     `created_at` DATETIME NOT NULL,
-//     `updated_at` DATETIME NULL,
-//     `deleted_at` DATETIME NULL,
-//     PRIMARY KEY (`id`),
-//     INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-//     CONSTRAINT `user_id`
-//       FOREIGN KEY (`user_id`)
-//       REFERENCES `ishare`.`Users` (`id`)
-//       ON DELETE NO ACTION
-//       ON UPDATE NO ACTION)
-//   ENGINE = InnoDB;
