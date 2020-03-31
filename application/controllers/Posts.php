@@ -20,4 +20,12 @@ class Posts extends CI_Controller
 		$data['test'] = 'Isto veio do controller';
 		$this->load_view($view, $data);
 	}
+
+	public function create(){
+		//Declaring wich view to load
+		$view = 'create';
+		//---------------------------
+		
+		$this->load_view($view);
+	}
 }
