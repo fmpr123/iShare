@@ -35,7 +35,7 @@ class Users extends AbstractMigration
         $table = $this->table('users');
         $table->addColumn('name', 'string', ['limit' => 100], ['null' => false])
             ->addColumn('email', 'string', ['limit' => 100], ['null' => false])
-            ->addColumn('password', 'string', ['limit' => 50], ['null' => false])
+            ->addColumn('password', 'string', ['limit' => 255], ['null' => false])
             ->addColumn('photo', 'string', ['limit' => 100], ['null' => true])
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'], ['null' => false])
             ->addColumn('updated_at', 'datetime', ['null' => true])

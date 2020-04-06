@@ -6,30 +6,37 @@
 
 <!-- Menu -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="<?php echo base_url(); ?>">iShare</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="<?php echo base_url();?>">Home</span></a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="create">Create</a>
+                <a class="nav-link" href="<?php echo base_url(); ?>">Home</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>create">Criar</a>
+                </li>
+            <?php endif; ?>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <ul class="na navbar-nav navbar-right">
+            <?php if (!$this->session->userdata('logged_in')) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>login">Login</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>register">Registar</a>
+                </li>
+            <?php endif; ?>
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>logout">Logout</a>
+                </li>
+            <?php endif; ?>
+        </ul>
     </div>
 </nav>
 <br>
