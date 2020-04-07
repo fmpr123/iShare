@@ -37,10 +37,33 @@ class Users extends CI_Controller
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('name');
         redirect('login');
+    }
+
+    public function register()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('photo', 'Photo', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+            $view = 'auth/register';
+            $this->load_view($view);
+        } else {
+            $result = $this->Users_model->register();
+            if (empty($result)) {
+                echo 'Registo falhou!';
+                redirect('register');
+            } else {
+                echo 'Registado com sucesso!';
+                redirect('');
+            }
+        }
     }
 }
