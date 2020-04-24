@@ -1,0 +1,38 @@
+.username{
+    margin: 0;
+    padding-left: 15px;
+}
+
+.user_image {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+.post_image {
+    height: 150px;
+    width: 150px;
+}
+
+.tagStyle {
+    margin-right: 15px;
+    background-color: #2C3E50;
+    color: white;
+    border-radius: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px;
+}
+
+.content {
+    padding: 0;
+}
+
+.userimg_div {
+    padding-right: 15px;
+    width: 50%;
+}
+
+.postimg_div {
+    padding-left: 15px;
+}
