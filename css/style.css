@@ -3,6 +3,9 @@
     padding-left: 15px;
 }
 
+.title{
+    font-weight: bold;
+}
 .user_image {
     border-radius: 50%;
     height: 100px;

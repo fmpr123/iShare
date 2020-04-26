@@ -1,4 +1,4 @@
-<?php echo validation_errors();?>
+<?php echo validation_errors(); ?>
 
 <?php echo form_open('create'); ?>
 <div class="row">
@@ -15,6 +15,7 @@
         <input type="text" class="form-control" name="url">
     </div>
     <div class="col-md-6 offset-md-3">
+        <br>
         <button type="submit" class="btn btn-primary">Criar</button>
     </div>
 </div>

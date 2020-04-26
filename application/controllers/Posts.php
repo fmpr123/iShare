@@ -16,15 +16,15 @@ class Posts extends CI_Controller
 		//Declaring wich view to load
 		$view = 'Show';
 		//---------------------------
-		
-		$this->load_view($view);
+		$data['posts'] = $this->Posts_model->show_posts();
+		$this->load_view($view, $data);
 	}
 
 	public function create()
 	{
 		if (!$this->session->userdata('logged_in')) {
-            redirect('');
-        }
+			redirect('');
+		}
 
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('content', 'Content', 'required');
