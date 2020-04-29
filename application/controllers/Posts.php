@@ -38,4 +38,22 @@ class Posts extends CI_Controller
 			redirect('');
 		}
 	}
+
+	public function edit($slug)
+	{
+		$data['posts'] = $this->Posts_model->get_post($slug);
+
+		$view = 'Edit';
+		$this->load_view($view, $data);
+	}
+
+	public function update(){
+		$this->Posts_model->update_post();
+		redirect('');
+	}
+
+	public function delete($slug){
+		$this->Posts_model->delete_post($slug);
+		redirect('');
+	}
 }

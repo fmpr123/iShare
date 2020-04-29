@@ -12,7 +12,6 @@ class Users_model extends CI_Model
         $password = $this->input->post('password');
 
         $this->db->where('email', $email);
-
         $result = $this->db->get('users');
 
         if ($result->num_rows() == 1) {

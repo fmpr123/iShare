@@ -1,3 +1,8 @@
+.likebtn{
+    border: 0;
+    padding: 0;
+}
+
 .username{
     margin: 0;
     padding-left: 15px;
