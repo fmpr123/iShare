@@ -1,4 +1,4 @@
-<?php echo validation_errors();?>
+<?php echo validation_errors(); ?>
 
 <?php echo form_open('login'); ?>
 <div class="row">
@@ -11,6 +11,7 @@
         <input type="password" class="form-control" name="password">
     </div>
     <div class="col-md-6 offset-md-3">
+        <br>
         <button type="submit" class="btn btn-primary">Login</button>
     </div>
 </div>

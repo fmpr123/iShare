@@ -12,7 +12,7 @@ class Posts_model extends CI_Model
             'title' => $this->input->post('title'),
             'content' => $this->input->post('content'),
             'url' => $this->input->post('url'),
-            'user_id' => $this->session->user_data('id')
+            'user_id' => $this->session->userdata('id')
         );
         return $this->db->insert('posts', $data);
     }
@@ -51,9 +51,32 @@ class Posts_model extends CI_Model
 
     public function delete_post($id)
     {
-        $this->db->from("posts_tags");
-        $this->db->join("posts", "posts.id = posts_tags.post_id");
         $this->db->where("post_id", $id);
-        $this->db->delete("posts");
+        $this->db->delete("posts_tags");
+        $this->db->where("id", $id);
+        return $this->db->delete("posts");
+    }
+
+    public function private_post($id)
+    {
+        $data = array(
+            'private' => 1
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('posts', $data);
+    }
+
+    public function report_post($id)
+    {
+        $this->db->set('complaints', 'complaints+1', FALSE);
+        $this->db->where('id', $id);
+        return $this->db->update('posts');
+    }
+
+    public function like_post($id)
+    {
+        $this->db->set('rating', 'rating+1', FALSE);
+        $this->db->where('id', $id);
+        return $this->db->update('posts');
     }
 }

@@ -58,6 +58,9 @@ $route['ishare/create'] = 'Posts/create';
 $route['ishare/edit/(:any)'] = 'Posts/edit/$1';
 $route['ishare/update'] = 'Posts/update';
 $route['ishare/delete/(:any)'] = 'Posts/delete/$1';
+$route['ishare/private/(:any)'] = 'Posts/private/$1';
+$route['ishare/report/(:any)'] = 'Posts/report/$1';
+$route['ishare/like/(:any)'] = 'Posts/like/$1';
 
 //Extra
 $route['default_controller'] = 'Posts/index';
