@@ -33,8 +33,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 postimg_div">
-                <img class="post_image" src="images/image_placeholder.png">
+            <div class="col-lg-3 postimg_div">
+                <?php if ($post['image'] == "") : ?>
+                    <img class="post_image" src="images/image_placeholder.png">
+                <?php else : ?>
+                    <img class="post_image" src="<?php echo $post['image']; ?>">
+                <?php endif; ?>
             </div>
         </div>
     </div>

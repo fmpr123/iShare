@@ -17,6 +17,8 @@ class Posts extends CI_Controller
 		$view = 'Show';
 		//---------------------------
 		$data['posts'] = $this->Posts_model->show_posts();
+
+
 		$this->load_view($view, $data);
 	}
 
@@ -65,12 +67,20 @@ class Posts extends CI_Controller
 		redirect('');
 	}
 
-	public function report($slug){
+	public function report($slug)
+	{
 		$this->Posts_model->report_post($slug);
 		redirect('');
 	}
-	public function like($slug){
+	public function like($slug)
+	{
 		$this->Posts_model->like_post($slug);
 		redirect('');
+	}
+
+	public function ajax()
+	{
+		$view = "ajax";
+		$this->load_view($view);
 	}
 }

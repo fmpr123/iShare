@@ -8,10 +8,18 @@ class Posts_model extends CI_Model
 
     public function create_post()
     {
+        $url = $this->input->post('url');
+        $target = urlencode($url);
+        $key = "8f9f867a82e13139b24bf9c7d9cb9387";
+        $ret = file_get_contents("https://api.linkpreview.net?key={$key}&q={$target}");
+        $result = json_decode($ret);
+        $image = $result->image;
+
         $data = array(
             'title' => $this->input->post('title'),
             'content' => $this->input->post('content'),
-            'url' => $this->input->post('url'),
+            'url' => $url,
+            'image_url' => $image,
             'user_id' => $this->session->userdata('id')
         );
         return $this->db->insert('posts', $data);
@@ -20,11 +28,10 @@ class Posts_model extends CI_Model
     public function show_posts()
     {
         $this->db->select('users.name as user_name, users.photo as user_photo,posts.id as post_id ,posts.title as post_title,
-        posts.created_at as post_date, posts.content as post_content, posts.url as post_url, tags.name as post_tags');
+        posts.created_at as post_date, posts.content as post_content, posts.url as post_url, posts.image_url as image');
         $this->db->from('users');
+        $this->db->order_by('post_id', 'DESC');
         $this->db->join('posts', 'posts.user_id = users.id');
-        $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
-        $this->db->join('tags', 'tags.id = posts_tags.id');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -80,3 +87,17 @@ class Posts_model extends CI_Model
         return $this->db->update('posts');
     }
 }
+
+
+// Posts com as tags
+// public function show_posts()
+//     {
+//         $this->db->select('users.name as user_name, users.photo as user_photo,posts.id as post_id ,posts.title as post_title,
+//         posts.created_at as post_date, posts.content as post_content, posts.url as post_url, tags.name as post_tags');
+//         $this->db->from('users');
+//         $this->db->join('posts', 'posts.user_id = users.id');
+//         $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
+//         $this->db->join('tags', 'tags.id = posts_tags.id');
+//         $query = $this->db->get();
+//         return $query->result_array();
+//     }
