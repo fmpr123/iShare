@@ -19,24 +19,28 @@
         <button type="submit" class="btn btn-primary">Criar</button>
     </div>
 </div>
-<img src="" alt="" id="img">
-<span id="res"></span>
+<?php echo form_close(); ?>
 
-<script type="text/javascript">
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <button class="btn btn-primary" id="ct">Preview Thumbnail</button>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <br>
+        <img class="image_preview" src="" alt="" id="img">
+    </div>
+</div>
+
+<script>
     $(document).ready(function() {
-        <?php
-        $target = urlencode("https://www.google.com");
-        $key = "8f9f867a82e13139b24bf9c7d9cb9387";
-        $ret = file_get_contents("https://api.linkpreview.net?key={$key}&q={$target}");
-        $result = json_decode($ret);
-        $image = $result->image;
-        ?>
-        document.getElementById("img").src = '<?php echo $image;?>';
-        
-        $('#url').on('paste', function() {
-            var teste = document.getElementById('url').value;
-            $('#res').html(teste);
-            console.log(teste);
+        $('#ct').on('click', function() {
+            var userUrl = document.getElementById('url').value;
+            $.ajax({
+                url: "https://api.linkpreview.net?key=8f9f867a82e13139b24bf9c7d9cb9387&q=" + userUrl,
+                success: function(result) {
+                    document.getElementById("img").src = result.image;
+                }
+            });
         });
     });
 </script>

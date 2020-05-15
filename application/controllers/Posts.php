@@ -17,8 +17,6 @@ class Posts extends CI_Controller
 		$view = 'Show';
 		//---------------------------
 		$data['posts'] = $this->Posts_model->show_posts();
-
-
 		$this->load_view($view, $data);
 	}
 
@@ -44,7 +42,6 @@ class Posts extends CI_Controller
 	public function edit($slug)
 	{
 		$data['posts'] = $this->Posts_model->get_post($slug);
-
 		$view = 'Edit';
 		$this->load_view($view, $data);
 	}
@@ -82,5 +79,15 @@ class Posts extends CI_Controller
 	{
 		$view = "ajax";
 		$this->load_view($view);
+	}
+
+	public function create_thumbnail($url)
+	{
+		$target = urlencode($url);
+		$key = "8f9f867a82e13139b24bf9c7d9cb9387";
+		$ret = file_get_contents("https://api.linkpreview.net?key={$key}&q={$target}");
+		$result = json_decode($ret);
+		$image = $result->image;
+		return $image;
 	}
 }
