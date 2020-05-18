@@ -1,14 +1,12 @@
-.image_preview{
-}
-
-.username{
+.username {
     margin: 0;
     padding-left: 15px;
 }
 
-.title{
+.title {
     font-weight: bold;
 }
+
 .user_image {
     border-radius: 50%;
     height: 100px;
@@ -16,8 +14,8 @@
 }
 
 .post_image {
-    height: 110px;
-    width: 130px;
+    height: 120px;
+    width: 150px;
 }
 
 .tagStyle {
@@ -34,11 +32,19 @@
     padding: 0;
 }
 
-.userimg_div {
-    padding-right: 15px;
-    width: 50%;
+.post_userimg {
+    margin-right: -27px;
 }
 
 .postimg_div {
     padding-left: 15px;
+}
+
+.post_content {
+    margin-left: -15px;
+}
+
+.post_url {
+    margin-left: -15px;
+    padding-bottom: 10px;
 }

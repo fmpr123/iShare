@@ -20,7 +20,7 @@ class Posts extends CI_Controller
 		$this->load_view($view, $data);
 	}
 
-	public function create()
+	public function create_post()
 	{
 		if (!$this->session->userdata('logged_in')) {
 			redirect('');
@@ -39,55 +39,52 @@ class Posts extends CI_Controller
 		}
 	}
 
-	public function edit($slug)
+	public function edit_post($slug)
 	{
 		$data['posts'] = $this->Posts_model->get_post($slug);
 		$view = 'Edit';
 		$this->load_view($view, $data);
 	}
 
-	public function update()
+	public function update_post()
 	{
 		$this->Posts_model->update_post();
 		redirect('');
 	}
 
-	public function delete($slug)
+	public function delete_post($slug)
 	{
 		$this->Posts_model->delete_post($slug);
 		redirect('');
 	}
 
-	public function private($slug)
+	public function private_post($slug)
 	{
 		$this->Posts_model->private_post($slug);
 		redirect('');
 	}
 
-	public function report($slug)
+	public function report_post($slug)
 	{
 		$this->Posts_model->report_post($slug);
 		redirect('');
 	}
-	public function like($slug)
+	public function like_post($slug)
 	{
 		$this->Posts_model->like_post($slug);
 		redirect('');
 	}
 
+	//Testes de Ajax
 	public function ajax()
 	{
 		$view = "ajax";
 		$this->load_view($view);
 	}
 
-	public function create_thumbnail($url)
-	{
-		$target = urlencode($url);
-		$key = "8f9f867a82e13139b24bf9c7d9cb9387";
-		$ret = file_get_contents("https://api.linkpreview.net?key={$key}&q={$target}");
-		$result = json_decode($ret);
-		$image = $result->image;
-		return $image;
-	}
+	public function search_post(){
+		$data['posts'] = $this->Posts_model->get_search();
+		$view = 'Search';
+		$this->load_view($view, $data);
+    }
 }

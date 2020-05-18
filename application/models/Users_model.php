@@ -31,15 +31,25 @@ class Users_model extends CI_Model
     {
         $name = $this->input->post('name');
         $email = $this->input->post('email');
-        $photo = $this->input->post('photo');
         $password = $this->input->post('password');
-
         $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+        $image_name = $name;
+
+        $config['upload_path'] = './images/user_photo';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 1000000;
+        $config['max_width'] = 2000;
+        $config['max_height'] = 2000;
+        $config['file_name'] = $image_name;
+
+        $this->load->library('upload', $config);
+
+        $this->upload->do_upload('photo');
 
         $data = array(
             'name' => $name,
             'email' => $email,
-            'photo' => $photo,
+            'photo' => $this->input->post('name'),
             'password' => $password_hashed
         );
 

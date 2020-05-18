@@ -54,13 +54,14 @@ $route['ishare/register'] = 'Users/register';
 $route['ishare/logout'] = 'Users/logout';
 $route['ishare/login'] = 'Users/login';
 //Posts
-$route['ishare/create'] = 'Posts/create';
-$route['ishare/edit/(:any)'] = 'Posts/edit/$1';
-$route['ishare/update'] = 'Posts/update';
-$route['ishare/delete/(:any)'] = 'Posts/delete/$1';
-$route['ishare/private/(:any)'] = 'Posts/private/$1';
-$route['ishare/report/(:any)'] = 'Posts/report/$1';
-$route['ishare/like/(:any)'] = 'Posts/like/$1';
+$route['ishare/create'] = 'Posts/create_post';
+$route['ishare/edit/(:any)'] = 'Posts/edit_post/$1';
+$route['ishare/update'] = 'Posts/update_post';
+$route['ishare/delete/(:any)'] = 'Posts/delete_post/$1';
+$route['ishare/private/(:any)'] = 'Posts/private_post/$1';
+$route['ishare/report/(:any)'] = 'Posts/report_post/$1';
+$route['ishare/like/(:any)'] = 'Posts/like_post/$1';
+$route['ishare/search'] = 'Posts/search_post';
 //Ajax
 $route['ishare/ajax'] = 'Posts/ajax';
 
