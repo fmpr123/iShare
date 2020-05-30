@@ -61,7 +61,7 @@ $route['ishare/delete/(:any)'] = 'Posts/delete_post/$1';
 $route['ishare/private/(:any)'] = 'Posts/private_post/$1';
 $route['ishare/report/(:any)'] = 'Posts/report_post/$1';
 $route['ishare/like/(:any)'] = 'Posts/like_post/$1';
-$route['ishare/search'] = 'Posts/search_post';
+$route['ishare/search'] = 'Search/search_post';
 //Ajax
 $route['ishare/ajax'] = 'Posts/ajax';
 
