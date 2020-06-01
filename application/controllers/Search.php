@@ -13,7 +13,15 @@ class Search extends CI_Controller
 
     public function search_post()
     {
-        $data['posts'] = $this->Search_model->get_search();
+        $choice = $this->input->post('choice');
+        $search = $this->input->post('search');
+
+        if ($choice == "0") {
+            $choice = "ASC";
+        }
+
+        $data['posts'] = $this->Search_model->search_title($search, $choice);
+
         $view = 'Search';
         $this->load_view($view, $data);
     }

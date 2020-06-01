@@ -5,11 +5,11 @@
     </div>
     <div style="padding-right: 15px">
         <select class="custom-select" name="choice">
-            <option selected="">Filtro</option>
-            <option value="title">Título</option>
-            <option value="content">Conteúdo</option>
-            <option value="tag">Tag</option>
-            <option value="name">Nome</option>
+            <option value="0">Filtro</option>
+            <option value="DESC">Ascendente</option>
+            <option value="ASC">Descendente</option>
+            <option value="recent">Recente</option>
+            <option value="old">Antigo</option>
         </select>
     </div>
     <div>
