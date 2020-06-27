@@ -16,7 +16,7 @@ class Posts extends CI_Controller
 		//Declaring wich view to load
 		$view = 'Show';
 		//---------------------------
-		$data['posts'] = $this->Posts_model->show_posts();
+		$data['posts'] = $this->Posts_model->get_posts();
 		$this->load_view($view, $data);
 	}
 
