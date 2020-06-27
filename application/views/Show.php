@@ -8,8 +8,8 @@
             <option value="0">Filtro</option>
             <option value="DESC">Ascendente</option>
             <option value="ASC">Descendente</option>
-            <option value="recent">Recente</option>
-            <option value="old">Antigo</option>
+            <option value="high">Mais Likes</option>
+            <option value="low">Menos Likes</option>
         </select>
     </div>
     <div>
