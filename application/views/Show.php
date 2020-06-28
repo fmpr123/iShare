@@ -1,4 +1,3 @@
-<?php print_r($posts);?>
 <?php echo form_open('search'); ?>
 <div class="row">
     <div class="col-md-4 offset-md-3">
@@ -48,9 +47,12 @@
                     <a href="<?php echo $post['post_url']; ?>"><?php echo $post['post_url']; ?></a>
                 </div>
                 <div class="row">
-                    <p class="tagStyle">Tag</p>
-                    <p class="tagStyle">Tag</p>
-                    <p class="tagStyle">Tag</p>
+                    <?php
+                    $string = $post['tags'];
+                    $array = explode(",", $string);
+                    foreach ($array as $arr) : ?>
+                        <p class="tagStyle"><?php echo $arr; ?></p>
+                    <?php endforeach; ?>
                     <div>
                         <a href="<?php echo base_url(); ?>like/<?php echo $post['post_id']; ?>" class="likebtn">
                             <i class="fa fa-heart-o"></i>
