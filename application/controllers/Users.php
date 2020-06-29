@@ -15,6 +15,13 @@ class Users extends CI_Controller
     {
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_error_delimiters(
+            '<div class="container">
+		<div class="alert alert-dismissible alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>',
+            '</div></div>'
+        );
 
         if ($this->form_validation->run() === FALSE) {
             $view = 'auth/login';
@@ -22,7 +29,7 @@ class Users extends CI_Controller
         } else {
             $result = $this->Users_model->user_verification();
             if (empty($result)) {
-                echo 'Dados incorretos';
+                $this->session->set_flashdata('login_error', 'Dados incorretos!');
                 redirect('login');
             } else {
                 $user = $result;
@@ -32,6 +39,7 @@ class Users extends CI_Controller
                     'logged_in' => true
                 );
                 $this->session->set_userdata($user_data);
+                $this->session->set_flashdata('login_success', 'Login feito com sucesso!');
                 redirect('');
             }
         }
@@ -42,6 +50,7 @@ class Users extends CI_Controller
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('name');
+        $this->session->set_flashdata('logout', 'Logout feito com sucesso!');
         redirect('login');
     }
 
@@ -50,6 +59,13 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_error_delimiters(
+            '<div class="container">
+		<div class="alert alert-dismissible alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>',
+            '</div></div>'
+        );
 
         if ($this->form_validation->run() === FALSE) {
             $view = 'auth/register';
@@ -57,10 +73,10 @@ class Users extends CI_Controller
         } else {
             $result = $this->Users_model->register();
             if (empty($result)) {
-                echo 'Registo falhou!';
+                $this->session->set_flashdata('signup_error', 'Registo falhou, tente novamente!');
                 redirect('register');
             } else {
-                echo 'Registado com sucesso!';
+                $this->session->set_flashdata('signup_success', 'Registo efetuado com sucesso!');
                 redirect('');
             }
         }

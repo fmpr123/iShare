@@ -29,6 +29,13 @@ class Posts extends CI_Controller
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('content', 'Content', 'required');
 		$this->form_validation->set_rules('url', 'Url', 'required');
+		$this->form_validation->set_error_delimiters(
+			'<div class="container">
+		<div class="alert alert-dismissible alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>',
+			'</div></div>'
+		);
 
 		if ($this->form_validation->run() === FALSE) {
 			$view = 'create';
@@ -82,9 +89,10 @@ class Posts extends CI_Controller
 		$this->load_view($view);
 	}
 
-	public function search_post(){
+	public function search_post()
+	{
 		$data['posts'] = $this->Posts_model->get_search();
 		$view = 'Search';
 		$this->load_view($view, $data);
-    }
+	}
 }

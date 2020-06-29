@@ -90,16 +90,3 @@ class Posts_model extends CI_Model
         return $this->db->update('posts');
     }
 }
-
-// Posts com as tags
-// public function show_posts()
-//     {
-//         $this->db->select('users.name as user_name, users.photo as user_photo,posts.id as post_id ,posts.title as post_title,
-//         posts.created_at as post_date, posts.content as post_content, posts.url as post_url, tags.name as post_tags');
-//         $this->db->from('users');
-//         $this->db->join('posts', 'posts.user_id = users.id');
-//         $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
-//         $this->db->join('tags', 'tags.id = posts_tags.id');
-//         $query = $this->db->get();
-//         return $query->result_array();
-//     }

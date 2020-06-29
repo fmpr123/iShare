@@ -43,3 +43,26 @@
     </div>
 </nav>
 <br>
+
+<div class="container">
+    <?php if ($this->session->flashdata('login_success')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('login_success') . '</a></div>'; ?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('login_error')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('login_error') . '</a></div>'; ?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('logout')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('logout') . '</a></div>'; ?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('signup_error')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('signup_error') . '</a></div>'; ?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('signup_success')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('signup_success') . '</a></div>'; ?>
+    <?php endif; ?>
+</div>
