@@ -31,8 +31,8 @@ class Posts_model extends CI_Model
         posts.created_at as post_date, posts.content as post_content, posts.url as post_url, posts.image_url as image, GROUP_CONCAT(tags.name) as tags');
         $this->db->from('users');
         $this->db->join('posts', 'posts.user_id = users.id');
-        $this->db->join('posts_tags','posts_tags.post_id = posts.id');
-        $this->db->join('tags','tags.id = posts_tags.tag_id');
+        $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
+        $this->db->join('tags', 'tags.id = posts_tags.tag_id');
         $this->db->order_by('post_id', 'DESC');
         $this->db->group_by('post_id');
         $query = $this->db->get();
@@ -88,5 +88,13 @@ class Posts_model extends CI_Model
         $this->db->set('rating', 'rating+1', FALSE);
         $this->db->where('id', $id);
         return $this->db->update('posts');
+    }
+
+    public function get_tags()
+    {
+        $this->db->select('id, name');
+        $this->db->from('tags');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 }

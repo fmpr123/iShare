@@ -16,6 +16,10 @@
             <input type="text" class="form-control" name="url" id="url">
         </div>
         <div class="col-md-12">
+            <label>Tags</label>
+            <input type="text" class="form-control" name="tags" id="tags">
+        </div>
+        <div class="col-md-12">
             <br>
             <button type="submit" class="btn btn-primary">Criar</button>
         </div>

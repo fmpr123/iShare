@@ -85,8 +85,9 @@ class Posts extends CI_Controller
 	//Testes de Ajax
 	public function ajax()
 	{
+		$data['tags'] = $this->Posts_model->get_tags();
 		$view = "ajax";
-		$this->load_view($view);
+		$this->load_view($view, $data);
 	}
 
 	public function search_post()

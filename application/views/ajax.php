@@ -1,26 +1,34 @@
 this is ajax
 <br>
-<!-- <?php
-        $target = urlencode("https://www.google.com");
-        $key = "8f9f867a82e13139b24bf9c7d9cb9387";
-        $ret = file_get_contents("https://api.linkpreview.net?key={$key}&q={$target}");
-        $result = json_decode($ret);
-        $image = $result->image;
-        ?>
 <br>
-<img src="<?php echo $image; ?>" alt=""> -->
-<br>
-<div class="col-md-6 offset-md-3">
-    <label>Url</label>
-    <input type="text" class="form-control" id="url">
-    <button id="btn">Test</button>
-    <span id="confirm"></span>
+<div class="col-md-12">
+    <label>Tags</label>
+    <input type="text" class="form-control" name="tags" id="tags" disabled="">
+</div>
+<div style="padding-right: 15px">
+    <div class="row">
+        <div>
+            <select class="custom-select" name="filter" id="filter">
+                <?php foreach ($tags as $tag) : ?>
+                    <option value="<?php echo $tag['name']; ?>"><?php echo $tag['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <button id="tag">Escolher</button>
+        <button id="escolhas">Verifica</button>
+    </div>
 </div>
 
-<script type="text/javascript">
+<script>
     $(document).ready(function() {
-        $('#btn').click(function(){
-            $('#confirm').html("ola");
+        $('#tag').on('click', function() {
+            var tag = document.getElementById('filter').value;
+            document.getElementById("tags").value += tag;
+        });
+        
+        $('#escolhas').on('click', function() {
+            var escolhas = document.getElementById('tags').value;
+            console.log(escolhas);
         });
     });
 </script>
