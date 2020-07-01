@@ -14,8 +14,9 @@ class Search extends CI_Controller
     public function search_post()
     {
         $search = $this->input->post('search');
+        $filter = $this->input->post('filter');
 
-        $data['posts'] = $this->Search_model->search_title($search);
+        $data['posts'] = $this->Search_model->search_title($search, $filter);
 
         $view = 'Search';
         $this->load_view($view, $data);

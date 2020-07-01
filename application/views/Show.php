@@ -4,12 +4,12 @@
         <input type="text" class="form-control" name="search">
     </div>
     <div style="padding-right: 15px">
-        <select class="custom-select" name="choice">
+        <select class="custom-select" name="filter">
             <option value="0">Filtro</option>
-            <option value="DESC">Ascendente</option>
-            <option value="ASC">Descendente</option>
-            <option value="high">Mais Likes</option>
-            <option value="low">Menos Likes</option>
+            <option value="older">Mais antigo</option>
+            <option value="recent">Mais recente</option>
+            <option value="more">Mais Likes</option>
+            <option value="less">Menos Likes</option>
         </select>
     </div>
     <div>
@@ -18,14 +18,15 @@
 </div>
 <?php echo form_close(); ?>
 <br>
-<?php foreach ($posts as $post) : ?>
-    <div class="container offset-md-3">
+<div class="container">
+    <?php foreach ($posts as $post) : ?>
+
         <div class="row">
-            <div class="col-lg-2 post_userimg">
+            <div class="col-lg-2 offset-lg-1 post_userimg">
                 <p class="username">@<?php echo $post['user_name']; ?></p>
                 <img class="user_image" src="images/user_photo/<?php echo $post['user_photo']; ?>.jpg">
             </div>
-            <div class="col-lg-4 content">
+            <div class="col-lg-5 content">
                 <div class="row">
                     <p class="title"> <?php echo $post['post_title']; ?> <small class="text-muted"> <?php echo $post['post_date']; ?></small></p>
                     <?php if ($this->session->userdata('logged_in')) : ?>
@@ -60,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?php if ($post['image'] == "") : ?>
                     <img class="post_image" src="images/image_placeholder.png">
                 <?php else : ?>
@@ -68,9 +69,8 @@
                 <?php endif; ?>
             </div>
         </div>
-    </div>
-<?php endforeach; ?>
-
+    <?php endforeach; ?>
+</div>
 <script>
     // $(document).ready(function() {
     //     $('#ct').on('click', function() {
