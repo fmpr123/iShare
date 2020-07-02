@@ -16,19 +16,34 @@ this is ajax
         </div>
         <button id="tag">Escolher</button>
         <button id="escolhas">Verifica</button>
+        <button id="clean">Limpar</button>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
+        var times = 0;
         $('#tag').on('click', function() {
-            var tag = document.getElementById('filter').value;
-            document.getElementById("tags").value += tag;
+            if (times < 3) {
+                var tag = document.getElementById('filter').value;
+                document.getElementById("tags").value += tag + " ";
+                times++;
+                console.log(times);
+            } else {
+                window.alert("Número máximo de tags atingido.");
+            }
         });
-        
+
+        $('#clean').on('click', function() {
+            document.getElementById("tags").value = '';
+            times = 0;
+        });
+
         $('#escolhas').on('click', function() {
             var escolhas = document.getElementById('tags').value;
             console.log(escolhas);
         });
     });
 </script>
+
+123

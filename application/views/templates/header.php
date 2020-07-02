@@ -70,4 +70,8 @@
         <?php echo '<div class="alert alert-dismissible alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('signup_success') . '</a></div>'; ?>
     <?php endif; ?>
+    <?php if ($this->session->flashdata('tags_maxnumber')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('tags_maxnumber') . '</a></div>'; ?>
+    <?php endif; ?>
 </div>
