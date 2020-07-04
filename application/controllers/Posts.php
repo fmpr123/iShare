@@ -38,8 +38,9 @@ class Posts extends CI_Controller
 		);
 
 		if ($this->form_validation->run() === FALSE) {
+			$data['tags'] = $this->Posts_model->get_tags();
 			$view = 'create';
-			$this->load_view($view);
+			$this->load_view($view, $data);
 		} else {
 			$this->Posts_model->create_post();
 			redirect('');
@@ -48,6 +49,10 @@ class Posts extends CI_Controller
 
 	public function edit_post($slug)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+
 		$data['posts'] = $this->Posts_model->get_post($slug);
 		$view = 'Edit';
 		$this->load_view($view, $data);
@@ -55,29 +60,49 @@ class Posts extends CI_Controller
 
 	public function update_post()
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+
 		$this->Posts_model->update_post();
 		redirect('');
 	}
 
 	public function delete_post($slug)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+
 		$this->Posts_model->delete_post($slug);
 		redirect('');
 	}
 
 	public function private_post($slug)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+		
 		$this->Posts_model->private_post($slug);
 		redirect('');
 	}
 
 	public function report_post($slug)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+
 		$this->Posts_model->report_post($slug);
 		redirect('');
 	}
 	public function like_post($slug)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+		
 		$this->Posts_model->like_post($slug);
 		redirect('');
 	}
@@ -85,7 +110,7 @@ class Posts extends CI_Controller
 	//Testes de Ajax
 	public function ajax()
 	{
-		$data['tags'] = $this->Posts_model->get_tags();
+		$data['posts'] = $this->Posts_model->get_latest_post();
 		$view = "ajax";
 		$this->load_view($view, $data);
 	}

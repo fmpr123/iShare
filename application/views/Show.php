@@ -71,12 +71,3 @@
         </div>
     <?php endforeach; ?>
 </div>
-<script>
-    // $(document).ready(function() {
-    //     $('#ct').on('click', function() {
-    //         $.ajax({
-
-    //         });
-    //     });
-    // });
-</script>

@@ -13,11 +13,33 @@
         </div>
         <div class="col-md-12">
             <label>Url</label>
-            <input type="text" class="form-control" name="url" id="url">
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="url" id="url">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="ct">Preview</button>
+                </div>
+            </div>
         </div>
         <div class="col-md-12">
             <label>Tags</label>
-            <input type="text" class="form-control" name="tags" id="tags">
+            <div class="row">
+                <div class="col-md-7">
+                    <input type="text" class="form-control" name="tags" id="tags" disabled>
+                </div>
+                <div class="col-md-2">
+                    <select class="custom-select" name="filter" id="filter">
+                        <?php foreach ($tags as $tag) : ?>
+                            <option value="<?php echo $tag['name']; ?>"><?php echo $tag['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary" type="button" id="tag">Escolher</button>
+                    <button class="btn btn-primary" type="button" id="clean">Limpar</button>
+                </div>
+            </div>
         </div>
         <div class="col-md-12">
             <br>
@@ -25,13 +47,8 @@
         </div>
     </div>
     <?php echo form_close(); ?>
-
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary" id="ct">Preview Thumbnail</button>
-        </div>
-        <div class="col-md-12">
-            <br>
             <img class="image_preview" src="" alt="" id="img">
         </div>
     </div>
@@ -46,6 +63,21 @@
                     document.getElementById("img").src = result.image;
                 }
             });
+        });
+        var times = 0;
+        $('#tag').on('click', function() {
+            if (times < 3) {
+                var tag = document.getElementById('filter').value;
+                document.getElementById("tags").value += tag + " ";
+                times++;
+                console.log(times);
+            } else {
+                window.alert("Número máximo de tags atingido.");
+            }
+        });
+        $('#clean').on('click', function() {
+            document.getElementById("tags").value = '';
+            times = 0;
         });
     });
 </script>

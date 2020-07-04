@@ -8,6 +8,7 @@ class Posts_model extends CI_Model
 
     public function create_post()
     {
+        //Create post
         $url = $this->input->post('url');
         $target = urlencode($url);
         $key = "8f9f867a82e13139b24bf9c7d9cb9387";
@@ -22,7 +23,21 @@ class Posts_model extends CI_Model
             'image_url' => $image,
             'user_id' => $this->session->userdata('id')
         );
-        return $this->db->insert('posts', $data);
+        $this->db->insert('posts', $data);
+
+        //Create tags
+        $post_id = $this->Posts_model->get_latest_post();
+        $string = $this->input->post('tags');
+        $array = explode(" ", $string);
+        
+        $tag1 = $this->Posts_model->get_tag_id($array[0]);
+
+        $data = array(
+            'post_id' => $post_id,
+            'tag_id' => $tag1
+        );
+
+        return $this->db->insert('posts_tags', $data);
     }
 
     public function get_posts()
@@ -96,5 +111,19 @@ class Posts_model extends CI_Model
         $this->db->from('tags');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function get_latest_post()
+    {
+        $this->db->select_max('id');
+        $this->db->from('posts');
+        return $this->db->get()->row()->id;
+    }
+
+    public function get_tag_id($tag){
+        $this->db->select('id');
+        $this->db->from('tags');
+        $this->db->where('name', $tag);
+        return $this->db->get()->row()->id;
     }
 }

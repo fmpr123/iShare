@@ -1,5 +1,6 @@
 this is ajax
 <br>
+<?php echo $posts;?>
 <br>
 <div class="col-md-12">
     <label>Tags</label>
@@ -15,8 +16,8 @@ this is ajax
             </select>
         </div>
         <button id="tag">Escolher</button>
-        <button id="escolhas">Verifica</button>
         <button id="clean">Limpar</button>
+        <button id="escolhas">Verifica</button>
     </div>
 </div>
 
@@ -45,5 +46,3 @@ this is ajax
         });
     });
 </script>
-
-123
