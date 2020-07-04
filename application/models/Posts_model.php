@@ -29,15 +29,17 @@ class Posts_model extends CI_Model
         $post_id = $this->Posts_model->get_latest_post();
         $string = $this->input->post('tags');
         $array = explode(" ", $string);
-        
-        $tag1 = $this->Posts_model->get_tag_id($array[0]);
+        $array_size = count($array);
 
-        $data = array(
-            'post_id' => $post_id,
-            'tag_id' => $tag1
-        );
-
-        return $this->db->insert('posts_tags', $data);
+        for($i=0; $i<$array_size-1;$i++){
+            $tag = $this->Posts_model->get_tag_id($array[$i]);
+            $data = array(
+                'post_id' => $post_id,
+                'tag_id' => $tag
+            );
+            $this->db->insert('posts_tags', $data);
+        }
+        return "Done";
     }
 
     public function get_posts()
@@ -123,7 +125,7 @@ class Posts_model extends CI_Model
     public function get_tag_id($tag){
         $this->db->select('id');
         $this->db->from('tags');
-        $this->db->where('name', $tag);
+        $this->db->where("name", $tag);
         return $this->db->get()->row()->id;
     }
 }

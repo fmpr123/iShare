@@ -29,6 +29,7 @@ class Posts extends CI_Controller
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('content', 'Content', 'required');
 		$this->form_validation->set_rules('url', 'Url', 'required');
+		$this->form_validation->set_rules('tags', 'tags', 'required');
 		$this->form_validation->set_error_delimiters(
 			'<div class="container">
 		<div class="alert alert-dismissible alert-danger">
@@ -110,7 +111,9 @@ class Posts extends CI_Controller
 	//Testes de Ajax
 	public function ajax()
 	{
-		$data['posts'] = $this->Posts_model->get_latest_post();
+		$string = "Livro Vídeo Java ";
+		$array = explode(" ", $string);
+		$data['posts'] = $this->Posts_model->get_tag_id($array[3]);
 		$view = "ajax";
 		$this->load_view($view, $data);
 	}

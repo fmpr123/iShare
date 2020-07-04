@@ -26,7 +26,7 @@
             <label>Tags</label>
             <div class="row">
                 <div class="col-md-7">
-                    <input type="text" class="form-control" name="tags" id="tags" disabled>
+                    <input type="text" class="form-control" name="tags" id="tags" readonly>
                 </div>
                 <div class="col-md-2">
                     <select class="custom-select" name="filter" id="filter">

@@ -1,6 +1,6 @@
 this is ajax
 <br>
-<?php echo $posts;?>
+<?php print_r($posts);?>
 <br>
 <div class="col-md-12">
     <label>Tags</label>
