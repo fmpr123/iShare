@@ -31,7 +31,7 @@ class Posts_model extends CI_Model
         $array = explode(" ", $string);
         $array_size = count($array);
 
-        for($i=0; $i<$array_size-1;$i++){
+        for ($i = 0; $i < $array_size - 1; $i++) {
             $tag = $this->Posts_model->get_tag_id($array[$i]);
             $data = array(
                 'post_id' => $post_id,
@@ -44,8 +44,9 @@ class Posts_model extends CI_Model
 
     public function get_posts()
     {
-        $this->db->select('users.name as user_name, users.photo as user_photo, posts.id as post_id, posts.title as post_title,
-        posts.created_at as post_date, posts.content as post_content, posts.url as post_url, posts.image_url as image, GROUP_CONCAT(tags.name) as tags');
+        $this->db->select('users.id as user_id, users.name as user_name, users.photo as user_photo, posts.id as post_id, posts.title as post_title,
+        posts.created_at as post_date, posts.content as post_content, posts.url as post_url, posts.image_url as image,
+        posts.rating as rating, posts.complaints as complaints, posts.private as private, posts.bloqued as bloqued, GROUP_CONCAT(tags.name) as tags');
         $this->db->from('users');
         $this->db->join('posts', 'posts.user_id = users.id');
         $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
@@ -58,22 +59,51 @@ class Posts_model extends CI_Model
 
     public function get_post($id)
     {
-        $this->db->select('*');
-        $this->db->from('posts');
-        $this->db->where('id', $id);
+        $this->db->select('users.id as user_id, users.name as user_name, users.photo as user_photo, posts.id as post_id, posts.title as post_title,
+        posts.created_at as post_date, posts.content as post_content, posts.url as post_url, posts.image_url as image,
+        posts.rating as rating, posts.complaints as complaints, posts.private as private, posts.bloqued as bloqued, GROUP_CONCAT(tags.name) as tags');
+        $this->db->from('users');
+        $this->db->where('posts.id', $id);
+        $this->db->join('posts', 'posts.user_id = users.id');
+        $this->db->join('posts_tags', 'posts_tags.post_id = posts.id');
+        $this->db->join('tags', 'tags.id = posts_tags.tag_id');
+        $this->db->order_by('post_id', 'DESC');
+        $this->db->group_by('post_id');
         $query = $this->db->get();
         return $query->row_array();
     }
 
     public function update_post()
     {
+        //Update post
+        $post_id = $this->input->post('id');
         $data = array(
             'title' => $this->input->post('title'),
             'content' => $this->input->post('content'),
             'url' => $this->input->post('url')
         );
-        $this->db->where('id', $this->input->post('id'));
-        return $this->db->update('posts', $data);
+        $this->db->where('id', $post_id);
+        $this->db->update('posts', $data);
+
+        //Update tags
+        //First delete tags of post being edited
+        $this->db->where("post_id", $post_id);
+        $this->db->delete("posts_tags");
+        //Then insert new tags
+        $string = $this->input->post('tags');
+        $array = explode(" ", $string);
+        $array_size = count($array);
+
+        for ($i = 0; $i < $array_size - 1; $i++) {
+            $tag = $this->Posts_model->get_tag_id($array[$i]);
+            $data = array(
+                'post_id' => $post_id,
+                'tag_id' => $tag
+            );
+            $this->db->insert('posts_tags', $data);
+        }
+
+        return "Done";
     }
 
     public function delete_post($id)
@@ -122,7 +152,8 @@ class Posts_model extends CI_Model
         return $this->db->get()->row()->id;
     }
 
-    public function get_tag_id($tag){
+    public function get_tag_id($tag)
+    {
         $this->db->select('id');
         $this->db->from('tags');
         $this->db->where("name", $tag);

@@ -55,6 +55,7 @@ class Posts extends CI_Controller
 		}
 
 		$data['posts'] = $this->Posts_model->get_post($slug);
+		$data['tags'] = $this->Posts_model->get_tags();
 		$view = 'Edit';
 		$this->load_view($view, $data);
 	}
@@ -64,7 +65,7 @@ class Posts extends CI_Controller
 		if (!$this->session->userdata('logged_in')) {
 			redirect('');
 		}
-
+		
 		$this->Posts_model->update_post();
 		redirect('');
 	}
@@ -84,7 +85,7 @@ class Posts extends CI_Controller
 		if (!$this->session->userdata('logged_in')) {
 			redirect('');
 		}
-		
+
 		$this->Posts_model->private_post($slug);
 		redirect('');
 	}
@@ -103,25 +104,18 @@ class Posts extends CI_Controller
 		if (!$this->session->userdata('logged_in')) {
 			redirect('');
 		}
-		
+
 		$this->Posts_model->like_post($slug);
 		redirect('');
 	}
 
-	//Testes de Ajax
+	//Testes
 	public function ajax()
 	{
 		$string = "Livro Vídeo Java ";
 		$array = explode(" ", $string);
 		$data['posts'] = $this->Posts_model->get_tag_id($array[3]);
 		$view = "ajax";
-		$this->load_view($view, $data);
-	}
-
-	public function search_post()
-	{
-		$data['posts'] = $this->Posts_model->get_search();
-		$view = 'Search';
 		$this->load_view($view, $data);
 	}
 }
