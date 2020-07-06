@@ -46,10 +46,11 @@
     </div>
 </nav>
 <br>
+</div>
 <div class="container">
     <!-- Login feito com sucesso -->
     <?php if ($this->session->flashdata('login_success')) : ?>
-        <?php echo '<div class="alert alert-dismissible alert-success">
+        <?php echo '<div class="alert alert-dismissible alert-success" style="margin-right: 10px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('login_success') . '</a></div>'; ?>
     <?php endif; ?>
     <!-- Login falhado -->
@@ -59,7 +60,7 @@
     <?php endif; ?>
     <!-- Logout -->
     <?php if ($this->session->flashdata('logout')) : ?>
-        <?php echo '<div class="alert alert-dismissible alert-success">
+        <?php echo '<div class="alert alert-dismissible alert-success" style="margin-right: 10px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('logout') . '</a></div>'; ?>
     <?php endif; ?>
     <!-- Erro de signup -->
