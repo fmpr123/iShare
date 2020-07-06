@@ -44,14 +44,22 @@ class Posts extends CI_Controller
 			$view = 'create';
 			$this->load_view($view, $data);
 		} else {
-			$this->Posts_model->create_post();
-			redirect('');
+			$result = $this->Posts_model->create_post();
+			if ($result == "tag_error") {
+				$this->session->set_flashdata('repeated_tag', 'Contém tags repetidas!');
+				redirect('create');
+			} else {
+				redirect('');
+			}
 		}
 	}
 
 	public function edit_post($slug)
 	{
 		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+		if($this->check_ownership($slug) == false && !$this->session->userdata('isAdmin')){
 			redirect('');
 		}
 
@@ -66,14 +74,23 @@ class Posts extends CI_Controller
 		if (!$this->session->userdata('logged_in')) {
 			redirect('');
 		}
+
+		$result = $this->Posts_model->update_post();
 		
-		$this->Posts_model->update_post();
-		redirect('');
+		if ($result['state'] == "tag_error") {
+			$this->session->set_flashdata('repeated_tag', 'Contém tags repetidas!');
+			redirect('edit/' . $result['post_id']);
+		} else {
+			redirect('');
+		}
 	}
 
 	public function delete_post($slug)
 	{
 		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+		if($this->check_ownership($slug) == false && !$this->session->userdata('isAdmin')){
 			redirect('');
 		}
 
@@ -84,6 +101,9 @@ class Posts extends CI_Controller
 	public function private_post($slug)
 	{
 		if (!$this->session->userdata('logged_in')) {
+			redirect('');
+		}
+		if($this->check_ownership($slug) == false && !$this->session->userdata('isAdmin')){
 			redirect('');
 		}
 
@@ -109,6 +129,15 @@ class Posts extends CI_Controller
 
 		$this->Posts_model->like_post($slug);
 		redirect('');
+	}
+
+	public function check_ownership($post_id){
+		$result = $this->Posts_model->check_post($post_id);
+		if(empty($result)){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	//Testes

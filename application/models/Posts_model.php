@@ -30,17 +30,22 @@ class Posts_model extends CI_Model
         $string = $this->input->post('tags');
         $array = explode(" ", $string);
         $array_size = count($array);
+        $result = $this->Posts_model->check_if_tag_repeats($array);
 
-        for ($i = 0; $i < $array_size - 1; $i++) {
-            $tag = $this->Posts_model->get_tag_id($array[$i]);
-            $data = array(
-                'post_id' => $post_id,
-                'tag_id' => $tag
-            );
-            $this->db->insert('posts_tags', $data);
+        if ($result == true) {
+            return "tag_error";
+        } else {
+            for ($i = 0; $i < $array_size - 1; $i++) {
+                $tag = $this->Posts_model->get_tag_id($array[$i]);
+                $data = array(
+                    'post_id' => $post_id,
+                    'tag_id' => $tag
+                );
+                $this->db->insert('posts_tags', $data);
+            }
+            $this->Posts_model->like_post($post_id);
+            return "Done";
         }
-        $this->Posts_model->like_post($post_id);
-        return "Done";
     }
 
     public function get_posts()
@@ -76,51 +81,76 @@ class Posts_model extends CI_Model
 
     public function update_post()
     {
-        //Update post
         $post_id = $this->input->post('id');
-        $data = array(
-            'title' => $this->input->post('title'),
-            'content' => $this->input->post('content'),
-            'url' => $this->input->post('url')
-        );
-        $this->db->where('id', $post_id);
-        $this->db->update('posts', $data);
-
-        //Update tags
-        //First delete tags of post being edited
-        $this->db->where("post_id", $post_id);
-        $this->db->delete("posts_tags");
-        //Then insert new tags
         $string = $this->input->post('tags');
         $array = explode(" ", $string);
-        $array_size = count($array);
-
-        for ($i = 0; $i < $array_size - 1; $i++) {
-            $tag = $this->Posts_model->get_tag_id($array[$i]);
-            $data = array(
-                'post_id' => $post_id,
-                'tag_id' => $tag
+        //Verify if tags are repeated
+        $result = $this->Posts_model->check_if_tag_repeats($array);
+        if ($result == true) {
+            return $array = array(
+                "state" => "tag_error",
+                "post_id" => $post_id
             );
-            $this->db->insert('posts_tags', $data);
+        } else {
+            //Update post
+            $data = array(
+                'title' => $this->input->post('title'),
+                'content' => $this->input->post('content'),
+                'url' => $this->input->post('url')
+            );
+            $this->db->where('id', $post_id);
+            $this->db->update('posts', $data);
+
+            //Update tags
+            //First delete tags of post being edited
+            $this->db->where("post_id", $post_id);
+            $this->db->delete("posts_tags");
+            //Then insert new tags
+            $array_size = count($array);
+
+            for ($i = 0; $i < $array_size - 1; $i++) {
+                $tag = $this->Posts_model->get_tag_id($array[$i]);
+                $data = array(
+                    'post_id' => $post_id,
+                    'tag_id' => $tag
+                );
+                $this->db->insert('posts_tags', $data);
+            }
+            return "Done";
         }
-        return "Done";
     }
 
     public function delete_post($id)
     {
+        //Delete post tags
         $this->db->where("post_id", $id);
         $this->db->delete("posts_tags");
+        //Delete post rating
+        $this->db->where("post_id", $id);
+        $this->db->delete("posts_rating");
+        //Delete post
         $this->db->where("id", $id);
         return $this->db->delete("posts");
     }
 
     public function private_post($id)
     {
-        $data = array(
-            'private' => 1
-        );
-        $this->db->where('id', $id);
-        return $this->db->update('posts', $data);
+        //Check if post is private
+        $result = $this->Posts_model->check_private($id);
+
+        if (empty($result)) {
+            $data = array(
+                'private' => 1
+            );
+            $this->db->where('id', $id);
+            return $this->db->update('posts', $data);
+        } else {
+            $data = array(
+                'private' => 0
+            );
+            $this->db->where('id', $id);
+            return $this->db->update('posts', $data);
+        }
     }
 
     public function report_post($id)
@@ -193,5 +223,35 @@ class Posts_model extends CI_Model
         $this->db->from('posts_rating');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function check_private($id)
+    {
+        $this->db->select('id');
+        $this->db->from('posts');
+        $this->db->where('id', $id);
+        $this->db->where('private', 1);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function check_if_tag_repeats($array)
+    {
+        if (count(array_unique($array)) < count($array)) {
+            // Array has duplicates
+            return true;
+        } else {
+            // Array does not have duplicates
+            return false;
+        }
+    }
+
+    public function check_post($post_id){
+        $this->db->select('id');
+        $this->db->from('posts');
+        $this->db->where('id', $post_id);
+        $this->db->where('user_id', $this->session->userdata('id'));
+        $query = $this->db->get();
+        return $query->row_array();
     }
 }

@@ -9,8 +9,8 @@
                 <option value="0">Filtro</option>
                 <option value="older">Mais antigo</option>
                 <option value="recent">Mais recente</option>
-                <option value="more">Mais Likes</option>
-                <option value="less">Menos Likes</option>
+                <option value="more">Mais gostos</option>
+                <option value="less">Menos gostos</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -20,7 +20,7 @@
     <?php echo form_close(); ?>
     <br>
     <?php foreach ($posts as $post) : ?>
-        <?php if ($post['private'] == 0 OR $post['user_id'] == $this->session->userdata('id')) : ?>
+        <?php if ($post['private'] == 0 or $post['user_id'] == $this->session->userdata('id') or $this->session->userdata('isAdmin')) : ?>
             <div class="row my-4">
                 <div class="col-md-2 post_userimg">
                     <p class="username">@<?php echo $post['user_name']; ?></p>
@@ -33,10 +33,14 @@
                             <div class="nav-item dropdown" style="float: right;width: 23%;text-align: end;">
                                 <a class="nav-link dropdown-toggle" style="padding: 0 4px;" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu">
-                                    <?php if ($post['user_id'] == $this->session->userdata('id')) : ?>
+                                    <?php if ($post['user_id'] == $this->session->userdata('id') or $this->session->userdata('isAdmin')) : ?>
                                         <a class="dropdown-item" href="<?php echo base_url(); ?>edit/<?php echo $post['post_id']; ?>">Editar</a>
                                         <a class="dropdown-item" href="<?php echo base_url(); ?>delete/<?php echo $post['post_id']; ?>">Apagar</a>
-                                        <a class="dropdown-item" href="<?php echo base_url(); ?>private/<?php echo $post['post_id']; ?>">Privado</a>
+                                        <?php if ($post['private'] == 0) : ?>
+                                            <a class="dropdown-item" href="<?php echo base_url(); ?>private/<?php echo $post['post_id']; ?>">Privado</a>
+                                        <?php else : ?>
+                                            <a class="dropdown-item" href="<?php echo base_url(); ?>private/<?php echo $post['post_id']; ?>">Público</a>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                     <a class="dropdown-item" href="<?php echo base_url(); ?>report/<?php echo $post['post_id']; ?>">Reportar</a>
                                 </div>
@@ -60,8 +64,8 @@
                             <a href="<?php echo base_url(); ?>like/<?php echo $post['post_id']; ?>" class="likebtn">
                                 <?php $counter = 0; ?>
                                 <?php foreach ($post_rating as $rating) : ?>
-                                    <?php if ($post['post_id'] == $rating['post_id'] &&  $this->session->userdata('id') == $rating['user_id']) : ?>
-                                        <?php $counter+=1; ?>
+                                    <?php if ($post['post_id'] == $rating['post_id'] && $this->session->userdata('id') == $rating['user_id']) : ?>
+                                        <?php $counter += 1; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                                 <?php if ($counter >= 1) : ?>

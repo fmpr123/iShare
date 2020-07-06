@@ -43,7 +43,6 @@
     </div>
 </nav>
 <br>
-
 <div class="container">
     <!-- Login feito com sucesso -->
     <?php if ($this->session->flashdata('login_success')) : ?>
@@ -69,5 +68,10 @@
     <?php if ($this->session->flashdata('signup_success')) : ?>
         <?php echo '<div class="alert alert-dismissible alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('signup_success') . '</a></div>'; ?>
+    <?php endif; ?>
+    <!-- Signup feito com sucesso -->
+    <?php if ($this->session->flashdata('repeated_tag')) : ?>
+        <?php echo '<div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>' . $this->session->flashdata('repeated_tag') . '</a></div>'; ?>
     <?php endif; ?>
 </div>

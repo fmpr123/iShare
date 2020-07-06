@@ -37,6 +37,7 @@ class Users extends AbstractMigration
             ->addColumn('email', 'string', ['limit' => 100], ['null' => false])
             ->addColumn('password', 'string', ['limit' => 255], ['null' => false])
             ->addColumn('photo', 'string', ['limit' => 100], ['null' => true])
+            ->addColumn('isAdmin', 'boolean', ['default' => false], ['null' => false])
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'], ['null' => false])
             ->addColumn('updated_at', 'datetime', ['null' => true])
             ->addColumn('deleted_at', 'datetime', ['null' => true])

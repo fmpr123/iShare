@@ -50,7 +50,8 @@ class Users_model extends CI_Model
             'name' => $name,
             'email' => $email,
             'photo' => $this->input->post('name'),
-            'password' => $password_hashed
+            'password' => $password_hashed,
+            'isAdmin' => 0
         );
 
         return $this->db->insert('users', $data);

@@ -36,7 +36,8 @@ class Users extends CI_Controller
                 $user_data = array(
                     'id' => $user[0]['id'],
                     'name' => $user[0]['name'],
-                    'logged_in' => true
+                    'logged_in' => true,
+                    'isAdmin' => $user[0]['isAdmin']
                 );
                 $this->session->set_userdata($user_data);
                 $this->session->set_flashdata('login_success', 'Login feito com sucesso!');
@@ -51,7 +52,7 @@ class Users extends CI_Controller
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('name');
         $this->session->set_flashdata('logout', 'Logout feito com sucesso!');
-        redirect('login');
+        redirect('');
     }
 
     public function register()
@@ -77,7 +78,7 @@ class Users extends CI_Controller
                 redirect('register');
             } else {
                 $this->session->set_flashdata('signup_success', 'Registo efetuado com sucesso!');
-                redirect('');
+                redirect('login');
             }
         }
     }
