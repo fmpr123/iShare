@@ -17,6 +17,7 @@ class Search extends CI_Controller
         $filter = $this->input->post('filter');
 
         $data['posts'] = $this->Search_model->search_title($search, $filter);
+        $data['post_rating'] = $this->Posts_model->get_ratings();
 
         $view = 'Search';
         $this->load_view($view, $data);

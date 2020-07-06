@@ -14,10 +14,10 @@
         <div class="col-md-12">
             <label>Url</label>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-11">
                     <input type="text" class="form-control" name="url" id="url">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1" style="padding-left: 0;">
                     <button type="button" class="btn btn-primary" id="ct">Preview</button>
                 </div>
             </div>
@@ -25,7 +25,7 @@
         <div class="col-md-12">
             <label>Tags</label>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <input type="text" class="form-control" name="tags" id="tags" readonly>
                 </div>
                 <div class="col-md-2">
@@ -35,7 +35,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <button class="btn btn-primary" type="button" id="tag">Escolher</button>
                     <button class="btn btn-primary" type="button" id="clean">Limpar</button>
                 </div>

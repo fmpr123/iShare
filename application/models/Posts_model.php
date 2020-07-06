@@ -39,6 +39,7 @@ class Posts_model extends CI_Model
             );
             $this->db->insert('posts_tags', $data);
         }
+        $this->Posts_model->like_post($post_id);
         return "Done";
     }
 
@@ -102,7 +103,6 @@ class Posts_model extends CI_Model
             );
             $this->db->insert('posts_tags', $data);
         }
-
         return "Done";
     }
 
@@ -132,9 +132,26 @@ class Posts_model extends CI_Model
 
     public function like_post($id)
     {
-        $this->db->set('rating', 'rating+1', FALSE);
-        $this->db->where('id', $id);
-        return $this->db->update('posts');
+        $result = $this->Posts_model->check_like($id);
+        if (empty($result)) {
+            $this->db->set('rating', 'rating+1', FALSE);
+            $this->db->where('id', $id);
+            $this->db->update('posts');
+
+            $data = array(
+                'post_id' => $id,
+                'user_id' => $this->session->userdata('id')
+            );
+            return $this->db->insert('posts_rating', $data);
+        } else {
+            $this->db->set('rating', 'rating-1', FALSE);
+            $this->db->where('id', $id);
+            $this->db->update('posts');
+
+            $this->db->where("post_id", $id);
+            $this->db->where("user_id", $this->session->userdata('id'));
+            return $this->db->delete("posts_rating");
+        }
     }
 
     public function get_tags()
@@ -158,5 +175,23 @@ class Posts_model extends CI_Model
         $this->db->from('tags');
         $this->db->where("name", $tag);
         return $this->db->get()->row()->id;
+    }
+
+    public function check_like($id)
+    {
+        $this->db->select('id');
+        $this->db->from('posts_rating');
+        $this->db->where("post_id", $id);
+        $this->db->where("user_id", $this->session->userdata('id'));
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function get_ratings()
+    {
+        $this->db->select('*');
+        $this->db->from('posts_rating');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 }

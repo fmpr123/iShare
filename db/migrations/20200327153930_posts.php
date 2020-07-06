@@ -36,6 +36,7 @@ class Posts extends AbstractMigration
         $table->addColumn('title', 'string', ['limit' => 50], ['null' => false])
             ->addColumn('content', 'string', ['limit' => 255], ['null' => false])
             ->addColumn('url', 'string', ['limit' => 100], ['null' => false])
+            ->addColumn('image_url', 'string', ['limit' => 255], ['null' => false])
             ->addColumn('rating', 'integer', ['default' => 0], ['null' => false])
             ->addColumn('complaints', 'integer', ['default' => 0], ['null' => false])
             ->addColumn('private', 'boolean', ['default' => false], ['null' => false])

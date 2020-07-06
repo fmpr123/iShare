@@ -1,0 +1,17 @@
+(Instalation)
+curl -s https://getcomposer.org/installer | php
+
+php composer.phar require robmorgan/phinx
+
+vendor/bin/phinx init
+
+mkdir db
+cd db
+mkdir migrations
+(-------)
+
+(create example)
+vendor/bin/phinx create MyNewMigration
+
+(migrate example)
+vendor/bin/phinx migrate -e development

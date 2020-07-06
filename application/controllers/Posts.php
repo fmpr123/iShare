@@ -17,6 +17,7 @@ class Posts extends CI_Controller
 		$view = 'Show';
 		//---------------------------
 		$data['posts'] = $this->Posts_model->get_posts();
+		$data['post_rating'] = $this->Posts_model->get_ratings();
 		$this->load_view($view, $data);
 	}
 
@@ -99,6 +100,7 @@ class Posts extends CI_Controller
 		$this->Posts_model->report_post($slug);
 		redirect('');
 	}
+
 	public function like_post($slug)
 	{
 		if (!$this->session->userdata('logged_in')) {
