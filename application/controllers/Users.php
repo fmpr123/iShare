@@ -37,6 +37,7 @@ class Users extends CI_Controller
                     'id' => $user[0]['id'],
                     'name' => $user[0]['name'],
                     'logged_in' => true,
+                    'user_photo' => $user[0]['photo'],
                     'isAdmin' => $user[0]['isAdmin']
                 );
                 $this->session->set_userdata($user_data);

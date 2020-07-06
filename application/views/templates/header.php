@@ -38,6 +38,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url(); ?>logout">Logout</a>
                 </li>
+                <li>
+                    <img class="logged_user" src="images/user_photo/<?php echo $this->session->userdata('user_photo'); ?>.jpg">
+                </li>
             <?php endif; ?>
         </ul>
     </div>

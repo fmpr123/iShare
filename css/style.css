@@ -47,3 +47,9 @@
     margin-left: -15px;
     padding-bottom: 10px;
 }
+
+.logged_user {
+    border-radius: 50%;
+    height: 46px;
+    width: 46px;
+}
